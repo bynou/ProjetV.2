@@ -51,27 +51,52 @@ function selectOptions(options) {
 
 // TEST LOCALSTORAGE
 let button = document.getElementById(`addToCart`);
+let currentItem = {};
+currentItem._id = id;
+// ON AJOUTE DES EVENTLISTENER POUR LA COMPLETION DE ITEM
+//OPTION COULEUR
+document.getElementById(`colors`).addEventListener(`change`, function (e) {
+  currentItem.color = e.target.value;
+  console.log(currentItem.color);
+});
+//OPTION QUANTITY
+document.getElementById(`quantity`).addEventListener(`change`, function (e) {
+  currentItem.quantity = e.target.value;
+  console.log(currentItem.quantity);
+});
 
 addCart();
 function addCart() {
-  const cart = {};
-
+  let newItemQuantity = currentItem.quantity;
   //Add to Cart => init localStorage
   button.addEventListener(`click`, function () {
-    let quantityChoice;
-    quantityChoice = quantity.value;
-    cart.quantity = quantityChoice;
-    cart.id = id;
-    localStorage.setItem(`cart`, JSON.stringify(cart));
-    console.log(cart);
+    let currentItemName = currentItem._id + currentItem.color;
+    let globalCart = [];
+    if (localStorage.getItem(currentItemName) !== null) {
+      let currentItemJSON = localStorage.getItem(currentItemName);
+      console.log(currentItemJSON);
+      let currentItemQuantity = currentItemJSON.quantity;
+      //
+      console.log(currentItemJSON.quantity);
+    } else {
+      // on pousse l'item dans le tableau
+      globalCart.push(currentItem);
+      // on formate array en string pour localStorage
+      let currentItemString = JSON.stringify(globalCart);
+      console.log(currentItemName);
+      // on host le array string dans localStorage avec pour clé id + couleur
+      localStorage.setItem(currentItemName, currentItemString);
+      console.log(`c'est cliqué :)`);
+      console.log(localStorage);
+    }
   });
-  // Set la couleur de l'item
-  document.getElementById(`colors`).addEventListener(`change`, function (e) {
+  // Set la couleur de l'item POTENTIELLEMENT A VIRER
+  /*document.getElementById(`colors`).addEventListener(`change`, function (e) {
     let colorChoice;
     colorChoice = e.target.value;
     cart.color = colorChoice;
     console.log(colorChoice);
-  });
+  });*/
 }
 const local = JSON.parse(localStorage.getItem("cart"));
 console.log(colors.value);
