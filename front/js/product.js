@@ -67,26 +67,21 @@ document.getElementById(`quantity`).addEventListener(`change`, function (e) {
 
 addCart();
 function addCart() {
-  let newItemQuantity = currentItem.quantity;
   //Add to Cart => init localStorage
   button.addEventListener(`click`, function () {
-    let currentItemName = currentItem._id + currentItem.color;
-    let globalCart = [];
-    if (localStorage.getItem(currentItemName) !== null) {
-      let currentItemJSON = localStorage.getItem(currentItemName);
-      console.log(currentItemJSON);
-      let currentItemQuantity = currentItemJSON.quantity;
-      //
-      console.log(currentItemJSON.quantity);
+    let cartList = [];
+    if (localStorage.length > 0) {
+      let getCart = localStorage.getItem(`cart`);
+      let cartParse = JSON.parse(getCart);
+      cartParse.push(currentItem);
+      let newCart = JSON.stringify(cartParse);
+      localStorage.setItem(`cart`, newCart);
+      console.log(`article ajouté a cartList`);
     } else {
-      // on pousse l'item dans le tableau
-      globalCart.push(currentItem);
-      // on formate array en string pour localStorage
-      let currentItemString = JSON.stringify(globalCart);
-      console.log(currentItemName);
-      // on host le array string dans localStorage avec pour clé id + couleur
-      localStorage.setItem(currentItemName, currentItemString);
-      console.log(`c'est cliqué :)`);
+      cartList.push(currentItem);
+      let cartListString = JSON.stringify(cartList);
+      localStorage.setItem(`cart`, cartListString);
+      console.log(`localStorage Initialisé`);
       console.log(localStorage);
     }
   });
