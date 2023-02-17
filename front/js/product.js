@@ -56,42 +56,45 @@ currentItem._id = id;
 // ON AJOUTE DES EVENTLISTENER POUR LA COMPLETION DE ITEM
 //OPTION COULEUR
 document.getElementById(`colors`).addEventListener(`change`, function (e) {
-  currentItem.color = e.target.value;
+  currentItemColor = e.target.value;
+  currentItem.color = currentItemColor;
   console.log(currentItem.color);
 });
 //OPTION QUANTITY
 document.getElementById(`quantity`).addEventListener(`change`, function (e) {
-  currentItem.quantity = e.target.value;
+  currentItemQuantity = e.target.value;
+  currentItem.quantity = currentItemQuantity;
   console.log(currentItem.quantity);
 });
 
-addCart();
-function addCart() {
-  //Add to Cart => init localStorage
-  button.addEventListener(`click`, function () {
-    let cartList = [];
-    if (localStorage.length > 0) {
-      let getCart = localStorage.getItem(`cart`);
-      let cartParse = JSON.parse(getCart);
-      cartParse.push(currentItem);
-      let newCart = JSON.stringify(cartParse);
-      localStorage.setItem(`cart`, newCart);
-      console.log(`article ajouté a cartList`);
-    } else {
-      cartList.push(currentItem);
-      let cartListString = JSON.stringify(cartList);
-      localStorage.setItem(`cart`, cartListString);
-      console.log(`localStorage Initialisé`);
-      console.log(localStorage);
-    }
-  });
-  // Set la couleur de l'item POTENTIELLEMENT A VIRER
-  /*document.getElementById(`colors`).addEventListener(`change`, function (e) {
-    let colorChoice;
-    colorChoice = e.target.value;
-    cart.color = colorChoice;
-    console.log(colorChoice);
-  });*/
+function saveCart(cart) {
+  localStorage.setItem(`cart`, JSON.stringify(cart));
 }
-const local = JSON.parse(localStorage.getItem("cart"));
-console.log(colors.value);
+function getCart() {
+  let basket = localStorage.getItem(`cart`);
+  if (basket == null) {
+    return [];
+  } else {
+    return JSON.parse(basket);
+  }
+}
+function addBasket(product) {
+  let basket = getCart();
+  let foundProduct = basket.find(
+    (p) => p.id == product.id && p.color == product.color
+  );
+  if (foundProduct != undefined) {
+    let newQuantity =
+      parseInt(foundProduct.quantity) + parseInt(currentItem.quantity);
+    foundProduct.quantity = newQuantity;
+  } else {
+    basket.push(product);
+  }
+
+  saveCart(basket);
+}
+
+//boutton ajouter au panier
+button.addEventListener(`click`, function () {
+  addBasket(currentItem);
+});
