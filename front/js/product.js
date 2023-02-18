@@ -39,8 +39,15 @@ function productDetails(product) {
   document.getElementById("description").textContent = `${product.description}`;
 
   selectOptions(product.colors);
+  addDetailProduct(product);
 }
-
+function addDetailProduct(product) {
+  currentItem.price = product.price;
+  currentItem.src = product.imageUrl;
+  currentItem.altTxt = product.altTxt;
+  currentItem.name = product.name;
+  currentItem.description = product.description;
+}
 //création boucle options produit
 function selectOptions(options) {
   for (let focus of options) {
