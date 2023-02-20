@@ -9,7 +9,7 @@ function callApi(id) {
       }
     })
     .then(function (data) {
-      displayProduct(data);
+      displayCart(data);
     })
     .catch(function (err) {
       console.log(err);
@@ -28,7 +28,7 @@ function getLocal() {
 function displayCart() {
   let cart = getLocal();
   for (let product of cart) {
-    callApi(product._id);
+    displayProduct(product);
   }
 }
 //Fonction affichage produit localStorage
@@ -36,7 +36,7 @@ function displayProduct(product) {
   let articleContainer = document.createElement(`article`);
   articleContainer.classList.add(`cart__item`);
   articleContainer.setAttribute(`data-id`, `${product._id}`);
-  //articleContainer.data-color = `${product.color}`;
+  articleContainer.setAttribute(`data-color`, `${product.color}`);
   container.appendChild(articleContainer);
 
   let iconContainer = document.createElement(`div`);
@@ -58,11 +58,10 @@ function displayProduct(product) {
 
   let displayProductContentDetailTitle = document.createElement(`h2`);
   displayProductContentDetailTitle.textContent = `${product.name}`;
-  // bug ici
   displayProductContentDetail.appendChild(displayProductContentDetailTitle);
 
   let displayProductContentDetailColor = document.createElement(`p`);
-  //displayProductContentDetailColor.textContent = `${product.color}`;
+  displayProductContentDetailColor.textContent = `${product.color}`;
   displayProductContentDetail.appendChild(displayProductContentDetailColor);
 
   let displayProductContentDetailPrice = document.createElement(`p`);
@@ -94,7 +93,7 @@ function displayProduct(product) {
   displayProductContentOptionsQuantityInput.type = `number`;
   displayProductContentOptionsQuantityInput.min = 1;
   displayProductContentOptionsQuantityInput.max = 100;
-  displayProductContentOptionsQuantityInput.id = `inputID`;
+  displayProductContentOptionsQuantityInput.value = `${product.quantity}`;
   displayProductContentOptionsQuantity.appendChild(
     displayProductContentOptionsQuantityInput
   );
@@ -108,25 +107,3 @@ function displayProduct(product) {
   containerDeleteTxt.textContent = `Supprimer`;
   containerDelete.appendChild(containerDeleteTxt);
 }
-/*<section id="cart__items">
-             <!--  <article class="cart__item" data-id="{product-ID}" data-color="{product-color}">
-                <div class="cart__item__img">
-                  <img src="../images/product01.jpg" alt="Photographie d'un canapé">
-                </div>
-                <div class="cart__item__content">
-                  <div class="cart__item__content__description">
-                    <h2>Nom du produit</h2>
-                    <p>Vert</p>
-                    <p>42,00 €</p>
-                  </div>
-                  <div class="cart__item__content__settings">
-                    <div class="cart__item__content__settings__quantity">
-                      <p>Qté : </p>
-                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="42">
-                    </div>
-                    <div class="cart__item__content__settings__delete">
-                      <p class="deleteItem">Supprimer</p>
-                    </div>
-                  </div>
-                </div>
-              </article> --></section> */

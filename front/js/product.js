@@ -42,7 +42,7 @@ function productDetails(product) {
 }
 function addDetailProduct(product) {
   currentItem.price = product.price;
-  currentItem.src = product.imageUrl;
+  currentItem.imageUrl = product.imageUrl;
   currentItem.altTxt = product.altTxt;
   currentItem.name = product.name;
   currentItem.description = product.description;
