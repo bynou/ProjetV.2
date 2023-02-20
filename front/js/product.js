@@ -4,7 +4,6 @@ const id = url.searchParams.get("id");
 const iconContainer = document.getElementsByClassName(`item__img`);
 let button = document.getElementById(`addToCart`);
 let currentItem = {};
-currentItem._id = id;
 main();
 function main() {
   callApi();
@@ -47,6 +46,7 @@ function addDetailProduct(product) {
   currentItem.altTxt = product.altTxt;
   currentItem.name = product.name;
   currentItem.description = product.description;
+  currentItem._id = product._id;
 }
 //création boucle options produit
 function selectOptions(options) {
