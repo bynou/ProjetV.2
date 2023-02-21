@@ -45,7 +45,7 @@ function displayCart() {
 }
 function deleteCart(product) {
   let cart = getCart();
-  cart = cart.filter((p) => p._id != product._id && p.color != product.color);
+  cart = cart.filter((p) => p.key != product.key);
   saveCart(cart);
 }
 //Fonction affichage produit localStorage

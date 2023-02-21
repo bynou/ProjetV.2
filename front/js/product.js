@@ -38,9 +38,13 @@ function productDetails(product) {
   document.getElementById("description").textContent = `${product.description}`;
 
   selectOptions(product.colors);
-  currentItem._id = product._id;
+  addDetailProduct(product);
 }
-
+function addDetailProduct(product) {
+  //let key = product._id + product.color;
+  currentItem._id = product._id;
+  //currentItem.key = key;
+}
 //création boucle options produit
 function selectOptions(options) {
   for (let focus of options) {
@@ -55,6 +59,8 @@ function selectOptions(options) {
 document.getElementById(`colors`).addEventListener(`change`, function (e) {
   currentItemColor = e.target.value;
   currentItem.color = currentItemColor;
+  let key = currentItem._id + currentItem.color;
+  currentItem.key = key;
 });
 //OPTION QUANTITY
 document.getElementById(`quantity`).addEventListener(`change`, function (e) {
