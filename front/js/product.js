@@ -38,11 +38,9 @@ function productDetails(product) {
   document.getElementById("description").textContent = `${product.description}`;
 
   selectOptions(product.colors);
-  addDetailProduct(product);
-}
-function addDetailProduct(product) {
   currentItem._id = product._id;
 }
+
 //création boucle options produit
 function selectOptions(options) {
   for (let focus of options) {
@@ -82,7 +80,7 @@ function getCart() {
 function addCart(product) {
   let cart = getCart();
   let foundProduct = cart.find(
-    (p) => p.id == product.id && p.color == product.color
+    (p) => p._id == product._id && p.color == product.color
   );
   if (foundProduct != undefined) {
     let newQuantity =
