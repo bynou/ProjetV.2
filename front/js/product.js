@@ -41,11 +41,6 @@ function productDetails(product) {
   addDetailProduct(product);
 }
 function addDetailProduct(product) {
-  currentItem.price = product.price;
-  currentItem.imageUrl = product.imageUrl;
-  currentItem.altTxt = product.altTxt;
-  currentItem.name = product.name;
-  currentItem.description = product.description;
   currentItem._id = product._id;
 }
 //création boucle options produit
