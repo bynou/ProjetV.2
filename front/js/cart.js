@@ -1,7 +1,7 @@
 let container = document.getElementById("cart__items");
 displayCart();
 //Recuperation API pour le product
-function callApi(id, color, quantity) {
+function callApi(id, color, quantity, key) {
   fetch(`http://localhost:3000/api/products/${id}`, { method: "GET" })
     .then(function (res) {
       if (res.ok) {
@@ -16,6 +16,7 @@ function callApi(id, color, quantity) {
         color: color,
         quantity: quantity,
         _id: id,
+        key: key,
       };
       let newProduct = { ...data, ...localProduct };
       displayProduct(newProduct);
@@ -40,11 +41,16 @@ function getCart() {
 function displayCart() {
   let cart = getCart();
   for (let product of cart) {
-    callApi(product._id, product.color, product.quantity);
+    callApi(product._id, product.color, product.quantity, product.key);
   }
 }
 function deleteCart(product) {
   let cart = getCart();
+  /* ce qui etait présent avant et ne fonctionnait pas:
+  cart = cart.filter((p)=>p._id != product._id && p.color != product.color
+  => supprimer tous les products qui avait le même id sans regarder 
+  la condition de la couleur
+  */
   cart = cart.filter((p) => p.key != product.key);
   saveCart(cart);
 }
@@ -118,7 +124,6 @@ function displayProduct(product) {
   let containerDelete = document.createElement("div");
   containerDelete.classList.add("cart__item__content__settings__delete");
   displayProductContentOptions.appendChild(containerDelete);
-
   let containerDeleteTxt = document.createElement("p");
   containerDeleteTxt.classList.add("deleteItem");
   containerDeleteTxt.textContent = "Supprimer";
