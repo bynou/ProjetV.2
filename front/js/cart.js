@@ -1,7 +1,8 @@
 let container = document.getElementById("cart__items");
 let msgErrQty = document.createElement("p");
 function msgErrQtyTxt() {
-  msgErrQty.textContent = "  * Veuillez saisir une quantité positive.";
+  msgErrQty.textContent =
+    "  * Veuillez saisir une quantité comprise entre 0 et 100.";
   msgErrQty.style.color = "red";
 }
 displayCart();
@@ -201,7 +202,7 @@ function displayProduct(product) {
   displayProductContentOptionsQuantityInput.addEventListener(
     "change",
     function (e) {
-      if (/^-/.test(e.target.value)) {
+      if (e.target.value < 0 || e.target.value > 100) {
         //displayProductContentOptionsQuantityInput.value.replace(/^-/, "lol");
         msgErrQtyTxt();
         console.log("BOUTTON QUANTITE ");
@@ -257,6 +258,7 @@ function firstNameControl(form) {
     console.log("OK");
     return true;
   } else {
+    document.getElementById("firstNameErrorMsg").style.color = "red";
     document.getElementById("firstNameErrorMsg").textContent =
       " * Veuillez saisir un prénom valide.";
     console.log("CHAMPS PRENOM");
@@ -272,6 +274,7 @@ function lastNameControl(form) {
     console.log("OK");
     return true;
   } else {
+    document.getElementById("lastNameErrorMsg").style.color = "red";
     document.getElementById("lastNameErrorMsg").textContent =
       " * Veuillez saisir un nom valide.";
     console.log("CHAMPS LASTNAME");
@@ -288,6 +291,7 @@ function addressControl(form) {
     console.log("OK");
     return true;
   } else {
+    document.getElementById("addressErrorMsg").style.color = "red";
     document.getElementById("addressErrorMsg").textContent =
       "* Veuillez saisir une adresse. ";
     console.log("CHAMPS ADRESSE");
@@ -303,6 +307,7 @@ function cityControl(form) {
     console.log("OK");
     return true;
   } else {
+    document.getElementById("cityErrorMsg").style.color = "red";
     document.getElementById("cityErrorMsg").textContent =
       " * Veuillez saisir le nom d'une Ville valide.";
     console.log("CHAMPS CITY");
@@ -322,6 +327,7 @@ function emailControl(form) {
     console.log("OK");
     return true;
   } else {
+    document.getElementById("emailErrorMsg").style.color = "red";
     document.getElementById("emailErrorMsg").textContent =
       " * Veuillez saisir une adresse mail valide.";
     console.log("CHAMPS EMAIL");

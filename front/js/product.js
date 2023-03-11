@@ -9,10 +9,7 @@ let containerOrder = document.getElementsByClassName("item__content")[0];
 let msg = document.createElement("p");
 containerOrder.appendChild(msg);
 //création paragraphe pour msg erreur QT
-let msgErrQty = document.createElement("p");
-document
-  .getElementsByClassName("item__content__settings__quantity")[0]
-  .appendChild(msgErrQty);
+
 main();
 function main() {
   callApi();
@@ -68,11 +65,9 @@ document.getElementById("colors").addEventListener("change", function (e) {
 //OPTION QUANTITY
 document.getElementById("quantity").addEventListener("change", function (e) {
   if (e.target.value < 1) {
-    msgErrQtyTxt();
     console.log("BOUTTON QUANTITE");
     console.log("ko");
   } else {
-    msgErrQty.textContent = " ";
     currentItem.quantity = e.target.value;
     console.log("BOUTTON QUANTITE");
     console.log("ok");
@@ -84,7 +79,11 @@ button.addEventListener("click", function () {
   // au localStorage
   console.log("QUANTITE AVANT IF");
   console.log(currentItem.quantity);
-  if (parseInt(currentItem.quantity) > 0 && currentItem.color) {
+  if (
+    parseInt(currentItem.quantity) > 0 &&
+    parseInt(currentItem.quantity) < 100 &&
+    currentItem.color
+  ) {
     addCart(currentItem);
     msg.textContent = " ";
     console.log("BOUTTON ADD TO CART");
@@ -132,17 +131,4 @@ function addCart(product) {
   saveCart(cart);
   //On refresh la quantite du produit avant la selection d'un nouvel input Qté
   currentItem.quantity = 0;
-}
-function msgErrQtyTxt() {
-  msgErrQty.textContent = "  * Veuillez saisir une quantité réèlle.";
-  msgErrQty.style.color = "red";
-}
-function msgErrOrder(element) {
-  let msg = document.createElement("p");
-  element.appendChild(msg).textContent =
-    "* Veuillez saisir une couleur et une quantité valide pour envoyer la commande";
-  msg.style.color = "red";
-  msg.style.fontSize = 11 + "px";
-  msg.style.fontWeight = "500";
-  console.log("ko order");
 }
